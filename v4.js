@@ -1,4 +1,4 @@
-// 4.12MiB/s
+// 3.93MiB/s
 
 // node first.js | pv > /dev/null
 

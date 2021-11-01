@@ -1,37 +1,34 @@
-// 4.12MiB/s
+// 40.0MiB/s
 
 // node first.js | pv > /dev/null
 
 const os = require('os');
 const { Readable } = require('stream');
 
-const fizz = 'Fizz'; // 4
-const buzz = 'Buzz'; //4
-const fizzbuzz = 'FizzBuzz'; //8
+function getStr(o) {
+    return `${o + 1}\n${o + 2}\nFizz\n${o + 4}\nBuzz\nFizz\n${o + 7}\n${o + 8}\nFizz\nBuzz\n${o + 11}\nFizz\n${o + 13}\n${o + 14}\nFizzBuzz\n`;
+}
+
+function numChars(numDigits) {
+    return 47 + (8 * numDigits);
+}
 
 class FizzBuzzStream extends Readable {
     constructor() {
         super();
 
-        this.i = 0;
+        this.iteration = 0;
     }
 
-    // allocateBuffer(bufferSize) {
-    //     this._cachedAllocations.set(bufferSize, Buffer.alloc(bufferSize, `${this._repeat}${os.EOL}`));
-    // }
-
     _read(size) {
-        // const bufferSize = (size % 2 && (this._repeat.length % 2)) ? size - 1 : size;
-        const buffer = Buffer.allocUnsafe(size);
-        
+        // generally size == 16384
 
-
-        this.push('asd');
+        this.push(getStr(this.iteration++ * 15));
     }
 }
 
-const yes = new FizzBuzzStream();
-yes.pipe(process.stdout);
+const stream = new FizzBuzzStream();
+stream.pipe(process.stdout);
 
 
 
